@@ -8,7 +8,7 @@ import Items from "./pages/Items";
 import Login from "./pages/Login";
 import ProtectedRoute from './components/ProtectedRoute';
 import { useState } from "react";
-
+import Order from "./pages/Order";
 
 export default function App() {
 
@@ -21,6 +21,7 @@ export default function App() {
                 <Route element={ProtectedRoute}></Route>
                 <Route path="/" element={<Layout />} >
                     <Route path="/home" element={<Home />} />
+                    <Route path="/order" element={<Order />} />
                     <Route path="/items" element={<Items />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="*" element={<NoPage />} />\
