@@ -4,8 +4,9 @@ import { Routes, Route } from "react-router-dom"
 import { BrowserRouter } from 'react-router-dom';
 import BasicCard from "../components/Items/Card.jsx"
 import Cart from "../components/Items/Cart.jsx";
-
+import { useParams } from "react-router-dom";
 const Items = () => {
+    let { id } = useParams();
     const [data, setData] = useState([])
     const [ItemInCart, setCartItems] = useState([])
 
@@ -15,13 +16,23 @@ const Items = () => {
         }
         const cart = localStorage.getItem("cart");
         setCartItems(JSON.parse(cart))
-        fetch("http://localhost:8081/api/items/")
+        fetch("http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/items/store/" + id)
             .then(res => res.json())
             .then(data => {
                 setData(data.items)
             })
 
     }, [])
+
+    const check = () => {
+        let sum = 0
+        ItemInCart.forEach((item) => {
+            sum += item.amount
+        })
+        return sum != 0
+
+    }
+
 
 
     const handleAddToCart = (clickedItem) => {
@@ -43,6 +54,7 @@ const Items = () => {
         });
 
     };
+    console.log("🚀 ~ file: Items.jsx:10 ~ Items ~ ItemInCart", ItemInCart)
 
     const styles = {
         row: {
@@ -76,15 +88,19 @@ const Items = () => {
             </div>
         )
     }
+    if (localStorage.getItem('login') === false) {
+        return
+    }
 
     return (
+
+
 
         < div >
             <div style={styles.row}>
                 {mapItems(data)}
             </div>
-
-            {mapCartItems(ItemInCart, setCartItems)}
+            {check() && mapCartItems(ItemInCart, setCartItems)}
         </div >
     )
 }

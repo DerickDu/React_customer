@@ -43,14 +43,12 @@ const Cart = ({ ItemInCart, setCartItems }) => {
             alert("Please add item to cart")
         }
         axios.post("http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/orders/", {
-            "orderId": null,
-            "droneAssigned": null,
             "customer": 1,
-            "tempCost": null,
-            "tempWeight": null,
+            "tempCost": 0,
+            "tempWeight": 0,
             "purchased": true,
-            "storeId": null,
-            "orderStatus": "Purchased",
+            "storeId": 1,
+            "orderStatus": "Not Purchased",
             "deliveryTime": 0,
             "purchaseTime": null,
             "arrivalTime": null
@@ -65,14 +63,12 @@ const Cart = ({ ItemInCart, setCartItems }) => {
                     const requestBody = {
                         "itemId": ItemInCart[i].itemId,
                         "quantity": ItemInCart[i].amount,
-                        "unitPrice": ItemInCart[i].price,
                         "orderId": order_id
                     }
                     console.log("🚀 ~ file: Cart.jsx:75 ~ clickToBuy ~ requestBody:", requestBody)
                     axios.post("http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/lines/", requestBody)
                         .then((res) => {
                             console.log(res)
-                            alert("Order placed Successfully!")
                         }
                         ).catch((err) => {
                             console.log(err)
@@ -84,32 +80,35 @@ const Cart = ({ ItemInCart, setCartItems }) => {
                 console.log(err)
             })
 
-
+        alert("Order placed Successfully!")
         setCartItems([]);
         localStorage.setItem("cart", JSON.stringify([]));
     }
 
     return (
-        <Card sx={{ minWidth: 150 }}>
-            <CardContent>
-                {ItemInCart.map((item) => {
-                    if (item.amount === 0) {
-                        return null;
-                    } else {
-                        return (
-                            <div key={item.itemId}>
-                                {`${item.name} ${item.amount}`}
-                                <Button key={item.name} variant="outlined" onClick={() => { handleMinusToCart(item) }}>-</Button>
-                            </div>
-                        )
-                    }
-                })}
-                <div>
-                    Total: {calculateTotal(ItemInCart)}
-                </div>
-                <Button variant="outlined" onClick={() => { clickToBuy() }}>Buy</Button>
-            </CardContent>
-        </Card>)
+        <div>
+            <Card sx={{ minWidth: 150 }}>
+                <CardContent>
+                    {ItemInCart.map((item) => {
+                        if (item.amount === 0) {
+                            return null;
+                        } else {
+                            return (
+                                <div key={item.itemId}>
+                                    {`${item.name} ${item.amount}`}
+                                    <Button key={item.name} variant="outlined" onClick={() => { handleMinusToCart(item) }}>-</Button>
+                                </div>
+                            )
+                        }
+                    })}
+                    <div>
+                        Total: {calculateTotal(ItemInCart)}
+                    </div>
+                </CardContent>
+            </Card>
+            <Button variant="outlined" onClick={() => { clickToBuy() }}>Buy</Button>
+        </div>
+    )
 }
 
 export default Cart

@@ -1,7 +1,7 @@
 const Home = () => {
-    if (localStorage.getItem('login') === false) {
-        return
-    }
+    // if (localStorage.getItem('login') === false) {
+    //     return
+    // }
     return <h1>Home</h1>;
 };
 

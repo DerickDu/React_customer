@@ -5,6 +5,10 @@ import OrderCard from "../components/Orders/OrderCard";
 
 
 const Order = () => {
+    // if (localStorage.getItem('login') === "false") {
+    //     return
+    // }
+
     const [order, setOrder] = useState([]);  // add state to functional component, initial [], return a array and a function to update the state
 
     useEffect(() => {

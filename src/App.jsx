@@ -2,13 +2,13 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
-import ProtectedRoute from './components/ProtectedRoute';
 import { useState } from "react";
 import Order from "./pages/Order";
+import Store from "./pages/Store";
+import Logout from "./pages/Logout";
 
 export default function App() {
 
@@ -17,13 +17,13 @@ export default function App() {
         <BrowserRouter>
             <Routes>
 
-                <Route exact path="/login" element={<Login />} />
-                <Route element={ProtectedRoute}></Route>
                 <Route path="/" element={<Layout />} >
-                    <Route path="/home" element={<Home />} />
+                    <Route index path="/login" element={<Login />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/order" element={<Order />} />
-                    <Route path="/items" element={<Items />} />
-                    <Route path="contact" element={<Contact />} />
+                    <Route path="/items/:id" element={<Items />} />
+                    <Route path="/store" element={<Store />} />
+                    <Route path="/logout" element={<Logout />} />
                     <Route path="*" element={<NoPage />} />\
                 </Route>
             </Routes>

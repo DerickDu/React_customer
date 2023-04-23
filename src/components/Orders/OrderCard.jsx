@@ -10,18 +10,19 @@ import LineButton from './LineButton';
 
 const OrderCard = ({ order, storeId }) => {
 
-    const [store, setStore] = useState("");
+    const [store, setStore] = useState([]);
+
 
 
     console.log("order", order)
 
     useEffect(() => {
 
-        fetch('http://localhost:8081/api/stores/' + storeId)
+        fetch('http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/stores/')
             .then((res) => res.json())
             .then((data) => {
                 setStore(data.data.name);
-
+                console.log("store", data.data)
             })
             .catch((err) => {
                 console.log(err);
@@ -29,32 +30,31 @@ const OrderCard = ({ order, storeId }) => {
     }, [])
 
     return (
-        < Card key={order.Id} sx={{ bgcolor: "#E8E8E8" }}
->
+        < Card key={order.Id} sx={{ bgcolor: "#E8E8E8" }}>
             <CardContent>
                 <Typography variant="h5" component="div">
                     Order ID: {order.orderId}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Order Cost: {order.tempCost}
+                    Order Cost: ${order.tempCost}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    From Store: {store}
+                    From Store: {storeId}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     Order Status: {order.orderStatus}
                 </Typography>
             </CardContent>
             <CardActions>
-                <LineButton OrderId={ order.orderId} />
-            </CardActions> 
+                <LineButton OrderId={order.orderId} />
+            </CardActions>
             <CardActions>
                 <Button variant="outlined" size="middle" onClick={(e) => {
                     e.preventDefault();
                     // console.log(item)
                     // clickHandler(item);
                 }}>Cancel Order</Button>
-            </CardActions> 
+            </CardActions>
         </Card >
     );
 }
