@@ -6,12 +6,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react'
 import LineButton from './LineButton';
-
+import axios from 'axios';
 
 const OrderCard = ({ order, storeId }) => {
 
     const [store, setStore] = useState([]);
 
+    const clickHandler = (item) => {
+        console.log("item", item)
+    }
 
 
     console.log("order", order)
