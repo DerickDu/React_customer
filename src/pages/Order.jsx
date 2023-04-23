@@ -9,19 +9,19 @@ const Order = () => {
 
     useEffect(() => {
 
-    fetch('http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/orders/customer/1')
-        .then((res) => res.json())
-        .then((data) => {
-            setOrder(data.orders);
-            console.log("order detail", data.orders);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    //fetchOrders();
+        fetch('http://6310apiserver-env.eba-jxexupk4.us-east-1.elasticbeanstalk.com/api/orders/customer/1')
+            .then((res) => res.json())
+            .then((data) => {
+                setOrder(data.orders);
+                console.log("order detail", data.orders);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        //fetchOrders();
     }, [])
-    
-    
+
+
     const styles = {
         row: {
             width: "100%",
@@ -35,16 +35,21 @@ const Order = () => {
         }
     }
 
-    
-    
+
+
     //fetch data, run the function vevery render of the component
 
     const mapOrders = (order) => {
+        console.log("🚀 ~ file: Order.jsx:43 ~ mapOrders ~ order:", order)
+        if (order["tempCost"] == 0) {
+            return
+        }
         return (
             <div style={styles.row}>
-                <OrderCard order={order} storeId={ order.storeId} />
+                <OrderCard order={order} storeId={order.storeId} />
             </div>
-            )}
+        )
+    }
 
 
 
